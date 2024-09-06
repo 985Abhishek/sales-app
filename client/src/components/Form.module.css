@@ -1,0 +1,78 @@
+/* .form {
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+  padding: 50px;
+  margin-left: 400px;
+}
+
+.form input {
+  padding: 5px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 200px;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.form button {
+  padding: 10px 15px;
+  height: 40px;
+  width: 120px;
+  font-size: 16px;
+  background-color: #b62121;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  border-spacing: 10px;
+  transition: background-color 0.3s;
+}
+
+.form button:hover {
+  background-color: #0056b3;
+}
+
+.category-list {
+  margin-top: 20px;
+}
+
+.form category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}
+
+.form category-item span {
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+.form category-item button {
+  padding: 5px 10px;
+  font-size: 14px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.form category-item button.edit {
+  background-color: #28a745;
+}
+
+.form category-item button.delete {
+  background-color: #ff4d4d;
+}
+
+.form category-item button:hover {
+  opacity: 0.8;
+} */

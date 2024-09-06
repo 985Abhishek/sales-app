@@ -1,0 +1,104 @@
+.form-container {
+  color:chartreuse;
+  background-color:darkmagenta;
+}
+.tax-table {
+border-collapse: collapse;
+margin-left:100px;
+margin-top:30px;
+}
+
+.tax-table th{
+  color:rgb(0, 0, 0);
+  text-align: center;
+}
+.tax-table td {
+  padding: 1px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.tax-table th {
+  background-color: #f4f4f4;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.three-dots {
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(188, 27, 27);
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.dropdown-content button {
+  padding: 10px;
+  background-color: white;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  /* width: 100%; */
+}
+
+.dropdown-content button:hover {
+  background-color: #f0f0f0;
+}
+
+.form-controls {
+  display: flex;
+  gap: 100px;
+  margin-top: 0px;
+}
+
+.form-controls input,
+.form-controls select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  /* width: 200px; */
+}
+
+.form-controls button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.form-controls button:hover {
+  background-color: #0056b3;
+}
+
+.add-tax-button {
+  position: absolute;
+  top: 18%;
+  left:67.9%;
+  
+  /* width:90px; */
+  margin-top: 1px;
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  
+}
