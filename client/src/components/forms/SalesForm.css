@@ -1,0 +1,59 @@
+.sales-form {
+  padding: 20px;
+}
+
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.sales-table th, .sales-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.sales-table th {
+  background-color: #f2f2f2;
+  text-align: center;
+}
+
+.quantity-counter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-counter button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.quantity-counter span {
+  margin: 0 10px;
+  display: inline-block;
+}
+
+.totals {
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+.submit button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 600px;
+}
+
+.Add-button {
+  background-color: #4CAF50;
+  margin-top: 30px;
+  width : 140px
+
+}
