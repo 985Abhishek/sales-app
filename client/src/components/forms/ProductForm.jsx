@@ -203,6 +203,7 @@ dispatch(setProduct(storedProducts))
               <td>{product.category.join(", ")}</td>
               <td>{product.tax.join(", ")}</td>
               <td>
+                
                 <Button onClick={() => handleOpenDialog(product)}>Edit</Button>
                 <Button onClick={() => handleDeleteProduct(product.id)}>Delete</Button>
               
