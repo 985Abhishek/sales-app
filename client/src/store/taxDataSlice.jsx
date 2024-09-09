@@ -5,7 +5,7 @@ const initialState = {
   description: "",
   amount: "",
   taxType: "",
-  TaxedAmount: ""
+  TaxedAmount: "",
 };
 
 export const taxDataSlice = createSlice({
@@ -24,8 +24,6 @@ export const taxDataSlice = createSlice({
     },
   },
 });
-
-
 
 export const { updateField, resetForm } = taxDataSlice.actions;
 
