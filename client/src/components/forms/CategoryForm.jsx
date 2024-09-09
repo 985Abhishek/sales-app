@@ -1,26 +1,28 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadCategories, saveCategories } from '../../utils/localSotrage';
 import {
   addCategory,
   deleteCategory,
   editCategory,
+  openAddDialog,
+  resetFormData,
   setCategories,
-} from "../../store/categorySlice";
-import { loadCategories, saveCategories } from "../../utils/localSotrage";
-import "../forms/categoryform.css"
+  setDropDownVisible,
+  setEditingId,
+  setPage,
+  updateFormData
+} from '../../store/categorySlice';
+import { Pagination } from '@mui/material';
+import AddDialog from '../dialogs/categorydialogs/AddDialog';
 
 const CategoryForm = () => {
   const dispatch = useDispatch();
-  const categories = useSelector((state) => state.category.categories);
-
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [editingId, setEditingId] = useState(null);
-  const [dropdownVisible, setDropdownVisible] = useState(null);
+  const { categories, formData, editingId, dropDownVisible, page, rowsperpage } = useSelector((state) => state.category);
 
   useEffect(() => {
     const storedCategories = loadCategories();
-    if (storedCategories.length > 0) {
+    if (storedCategories.length) {
       dispatch(setCategories(storedCategories));
     }
   }, [dispatch]);
@@ -29,43 +31,69 @@ const CategoryForm = () => {
     saveCategories(categories);
   }, [categories]);
 
-  const handleAdd = () => {
-    const newCategory = {
-      id: Date.now(),
-      name,
-      description,
-    };
-    dispatch(addCategory(newCategory));
-    setName("");
-    setDescription("");
+  const handlePageChange = () => {
+    dispatch(setPage(newPage));
   };
 
-  const handleEdit = (id) => {
-    const updatedData = { name, description };
-    dispatch(editCategory({ id:editingId, updatedData }));
-    setEditingId(null);
-    setDropdownVisible(null);
-    setName(""); 
-  setDescription(""); 
+  const paginatedCategories = categories.slice((page - 1) * rowsperpage, page * rowsperpage);
+
+  const handleAdd = () => {
+    if(!(formData.name && formData.description)){
+      alert("Please fill all the fields");
+      return;
+    }
+    const newCategory = {
+      id: Date.now(),
+      name: formData.name,
+      description: formData.description
+    };
+    dispatch(addCategory(newCategory));
+    dispatch(resetFormData());
   };
+
+const handleCloseAddDialog = () => {
+    dispatch(openAddDialog(false));
+    dispatch(resetFormData())
+  };
+
+  const handleSaveChanges = () => {
+    if(editingId) {
+      const updatedData ={
+        id : editingId.id,
+        ...formData
+      };
+      dispatch(editCategory(updatedData))
+      handleCloseAddDialog()
+    }
+  }
 
   const handleDelete = (id) => {
     dispatch(deleteCategory(id));
-    setDropdownVisible(null);
+    dispatch(setDropDownVisible(null));
   };
 
-  const toggleDropdown = (id) => {
-    if (dropdownVisible === id) {
-      setDropdownVisible(null);
+  const handleEdit = () => {
+    dispatch(editCategory({ id: editingId, updatedData: formData }));
+    dispatch(setEditingId(null));
+    dispatch(resetFormData());
+  };
+
+  const toggleDropDown = (id) => {
+    if (dropDownVisible == id) {
+      dispatch(setDropDownVisible(null));
     } else {
-      setDropdownVisible(id);
+      dispatch(setDropDownVisible(id));
     }
   };
+
   const handleEditClick = (id) => {
     const categoryToEdit = categories.find((category) => category.id === id);
-    setName(categoryToEdit.name);
-    setDescription(categoryToEdit.description);
-    setEditingId(id);
+    dispatch(updateFormData(categoryToEdit));
+    dispatch(setEditingId(id));
+  };
+
+  const handleInputChange = (e) => {
+    dispatch(updateFormData({ [e.target.name]: e.target.value }));
   };
 
   return (
@@ -80,27 +108,20 @@ const CategoryForm = () => {
           </tr>
         </thead>
         <tbody>
-          {categories.map((category, index) => (
-            <tr key={categories.id}>
+          {paginatedCategories.map((category, index) => (
+            <tr key={category.id}>
               <td>{index + 1}</td>
               <td>{category.name}</td>
               <td>{category.description}</td>
               <td>
                 <div className="dropdown">
-                  <button
-                    onClick={() => toggleDropdown(category.id)}
-                    className="three-dots"
-                  >
+                  <button onClick={() => toggleDropDown(category.id)} className="three-dots">
                     &#x2026;
                   </button>
-                  {dropdownVisible === category.id && (
+                  {dropDownVisible === category.id && (
                     <div className="dropdown-content">
-                      <button onClick={() => handleEditClick(category.id)}>
-                        Edit
-                      </button>
-                      <button onClick={() => handleDelete(category.id)}>
-                        Delete
-                      </button>
+                      <button onClick={() => handleEditClick(category.id)}>Edit</button>
+                      <button onClick={() => handleDelete(category.id)}>Delete</button>
                     </div>
                   )}
                 </div>
@@ -111,24 +132,26 @@ const CategoryForm = () => {
       </table>
 
       <div className="form-controls">
-        <input
-          type="text"
-          placeholder="Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Description"
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        />
-        {editingId ? (
-          <button onClick={() => handleEdit(editingId)}>Save Changes</button>
-        ) : (
-          <button onClick={handleAdd}>Add Category</button>
-        )}
+        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleInputChange} />
+        <input type="text" name="description" placeholder="Description" value={formData.description} onChange={handleInputChange} />
+        {editingId ? <button onClick={handleEdit}>Save Changes</button> : <button onClick={handleAdd}>Add Category</button>}
       </div>
+      <Pagination
+        count={categories.length}
+        page={page}
+        onChange={(event, newPage) => {
+          dispatch(setPage(newPage));
+        }}
+        rowsperpage={rowsperpage}
+        variant="outlined"
+        shape="rounded"
+      />
+      <AddDialog
+      open ={openAddDialog} 
+      handleClose = {handleCloseAddDialog}
+      handleSave = {handleAdd}
+      handleChange = {(field,value)=>dispatch(updateFormData({field, value}))}
+      handleSaveChanges = {handleSaveChanges}/>
     </div>
   );
 };

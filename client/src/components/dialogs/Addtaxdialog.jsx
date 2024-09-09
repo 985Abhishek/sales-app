@@ -9,7 +9,8 @@ import { useDispatch } from "react-redux";
 
 const AddTaxDialog = ({ open, handleClose, handleSave,handleChange, formData, handleTax }) => {
 
-  const handleSaveClick = () => {
+      handleSave = {handleAdd}
+      const handleSaveClick = (openAddDialog, handleCloseAddDialog, handleAdd, updateFormData) => {
     if (formData.amount && formData.taxType) {
       const id =formData.id || Date.now();
       handleTax(formData.id, formData.taxType);
