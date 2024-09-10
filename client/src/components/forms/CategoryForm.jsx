@@ -3,9 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loadCategories, saveCategories } from '../../utils/localSotrage';
 import {
   addCategory,
+  closeAddDialog,
+  closeDeleteDialog,
+  closeEditDialog,
   deleteCategory,
   editCategory,
   openAddDialog,
+  openDeleteDialog,
+  openEditDialog,
   resetFormData,
   setCategories,
   setDropDownVisible,
@@ -15,10 +20,12 @@ import {
 } from '../../store/categorySlice';
 import { Pagination } from '@mui/material';
 import AddDialog from '../dialogs/categorydialogs/AddDialog';
+import EditDialog from '../dialogs/categorydialogs/EditDialog';
+import DeleteDialog from '../dialogs/categorydialogs/DeleteDialogs';
 
 const CategoryForm = () => {
   const dispatch = useDispatch();
-  const { categories, formData, editingId, dropDownVisible, page, rowsperpage } = useSelector((state) => state.category);
+  const { categories, formData, editingId, dropDownVisible, page, rowsperpage, addDialogOpen } = useSelector((state) => state.category);
 
   useEffect(() => {
     const storedCategories = loadCategories();
@@ -31,15 +38,23 @@ const CategoryForm = () => {
     saveCategories(categories);
   }, [categories]);
 
-  const handlePageChange = () => {
+  const handlePageChange = (newPage) => {
     dispatch(setPage(newPage));
   };
-
   const paginatedCategories = categories.slice((page - 1) * rowsperpage, page * rowsperpage);
 
+  const handleOpenAddDialog = () => {
+    dispatch(resetFormData());
+    dispatch(openAddDialog(true));
+  };
+  const handleCloseAddDialog = () => {
+    dispatch(closeAddDialog(false));
+    dispatch(resetFormData());
+  };
+
   const handleAdd = () => {
-    if(!(formData.name && formData.description)){
-      alert("Please fill all the fields");
+    if (!(formData.name && formData.description)) {
+      alert('Please fill all the fields');
       return;
     }
     const newCategory = {
@@ -48,24 +63,42 @@ const CategoryForm = () => {
       description: formData.description
     };
     dispatch(addCategory(newCategory));
+    handleCloseAddDialog();
+  };
+
+  // const handleEdit = () => {
+  //   if (editingId) {
+  //     const updatedData = {
+  //       id: editingId.id,
+  //       ...formData
+  //     };
+  //     dispatch(editCategory(updatedData));
+  //     //handleCloseEditDialog();
+  //     handleCloseAddDialog()
+  //   }
+  // };
+
+  const handleOpenEditDialog = (id) => {
+    const categoryToEdit = categories.find((category) => category.id === id);
+    dispatch(updateFormData(categoryToEdit));
+    dispatch(setEditingId(id));
+    dispatch(openEditDialog());
+  };
+
+  const handleCloseEditDialog = () => {
+    dispatch(closeEditDialog(true ));
+    dispatch(setEditingId(null));
     dispatch(resetFormData());
   };
-
-const handleCloseAddDialog = () => {
-    dispatch(openAddDialog(false));
-    dispatch(resetFormData())
+  const handleOpenDeleteDialog = (id) => {
+    dispatch(setDropDownVisible(null));
+    dispatch(openDeleteDialog(true));
+    dispatch(editingId(null));
   };
 
-  const handleSaveChanges = () => {
-    if(editingId) {
-      const updatedData ={
-        id : editingId.id,
-        ...formData
-      };
-      dispatch(editCategory(updatedData))
-      handleCloseAddDialog()
-    }
-  }
+  const handleCloseDeleteDialog = (id) => {
+    dispatch(closeDeleteDialog());
+  };
 
   const handleDelete = (id) => {
     dispatch(deleteCategory(id));
@@ -74,16 +107,12 @@ const handleCloseAddDialog = () => {
 
   const handleEdit = () => {
     dispatch(editCategory({ id: editingId, updatedData: formData }));
-    dispatch(setEditingId(null));
+    dispatch(editingId(null));
     dispatch(resetFormData());
   };
 
   const toggleDropDown = (id) => {
-    if (dropDownVisible == id) {
-      dispatch(setDropDownVisible(null));
-    } else {
-      dispatch(setDropDownVisible(id));
-    }
+    dispatch(setDropDownVisible(dropDownVisible === id ? null : id));
   };
 
   const handleEditClick = (id) => {
@@ -95,6 +124,10 @@ const handleCloseAddDialog = () => {
   const handleInputChange = (e) => {
     dispatch(updateFormData({ [e.target.name]: e.target.value }));
   };
+
+  const handleSaveChanges = ()=> [
+    
+  ]
 
   return (
     <div className="form-container">
@@ -116,12 +149,12 @@ const handleCloseAddDialog = () => {
               <td>
                 <div className="dropdown">
                   <button onClick={() => toggleDropDown(category.id)} className="three-dots">
-                    &#x2026;
+                    &#8942;
                   </button>
                   {dropDownVisible === category.id && (
                     <div className="dropdown-content">
-                      <button onClick={() => handleEditClick(category.id)}>Edit</button>
-                      <button onClick={() => handleDelete(category.id)}>Delete</button>
+                      <button onClick={() => handleOpenEditDialog(category.id)}>Edit</button>
+                      <button onClick={() => handleOpenDeleteDialog(category.id)}>Delete</button>
                     </div>
                   )}
                 </div>
@@ -132,26 +165,30 @@ const handleCloseAddDialog = () => {
       </table>
 
       <div className="form-controls">
-        <input type="text" name="name" placeholder="Name" value={formData.name} onChange={handleInputChange} />
-        <input type="text" name="description" placeholder="Description" value={formData.description} onChange={handleInputChange} />
-        {editingId ? <button onClick={handleEdit}>Save Changes</button> : <button onClick={handleAdd}>Add Category</button>}
+        <button onClick={handleOpenAddDialog}>Add Category</button>
       </div>
       <Pagination
-        count={categories.length}
+        count={Math.ceil(categories.length / rowsperpage)}
         page={page}
-        onChange={(event, newPage) => {
-          dispatch(setPage(newPage));
-        }}
+        onChange={handlePageChange}
         rowsperpage={rowsperpage}
         variant="outlined"
         shape="rounded"
       />
       <AddDialog
-      open ={openAddDialog} 
-      handleClose = {handleCloseAddDialog}
-      handleSave = {handleAdd}
-      handleChange = {(field,value)=>dispatch(updateFormData({field, value}))}
-      handleSaveChanges = {handleSaveChanges}/>
+        open={addDialogOpen}
+        handleClose={handleCloseAddDialog}
+        handleSave={handleAdd}
+        handleChange={(field, value) => dispatch(updateFormData({ [field]: value }))}
+      />
+      {/* <EditDialog
+        open={openEditDialog}
+        handleClose={handleCloseEditDialog}
+        handleSave={handleAdd}
+        handleChange={(field, value) => dispatch(updateFormData({ [field]: value }))}
+      /> */}
+ {/*
+      <DeleteDialog open={openDeleteDialog} handleClose={handleCloseDeleteDialog} handleDelete={handleDelete} categoryId={editingId} /> */}
     </div>
   );
 };

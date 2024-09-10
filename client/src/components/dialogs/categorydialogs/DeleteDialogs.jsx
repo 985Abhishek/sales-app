@@ -9,13 +9,11 @@ import {
   import React from "react";
   
   const DeleteDialog = ({
-  open,
-    handleCloseDeleteDialog,
-    handleConfirmDelete,
+  open,handleClose, handleDelete, 
   }) => {
     return (
       <div>
-        <Dialog open={open} onClose={handleCloseDeleteDialog}>
+        <Dialog open={open} onClose={handleClose}>
           <DialogTitle>Confirm Deletion</DialogTitle>
           <DialogContent>
             <DialogContentText>
@@ -23,8 +21,8 @@ import {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button style ={{color:"white", backgroundColor:"red"}} onClick={handleCloseDeleteDialog}>Cancel</Button>
-            <Button style ={{color:"white", backgroundColor:"green"}} onClick={handleConfirmDelete} color="error">
+            <Button style ={{color:"white", backgroundColor:"red"}} onClick={handleClose}>Cancel</Button>
+            <Button style ={{color:"white", backgroundColor:"green"}} onClick={handleDelete} color="error">
               Confirm
             </Button>
           </DialogActions>
