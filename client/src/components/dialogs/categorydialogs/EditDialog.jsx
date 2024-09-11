@@ -2,8 +2,8 @@ import { Button, Dialog, DialogContent, DialogTitle, TextField } from '@mui/mate
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-const EditDialog = ({open, handleClose, handleSave, handleChange}) => {
-    const formData = useSelector((state)=> state.category)
+const EditDialog = ({open, handleClose, handleSave,formData, handleChange}) => {
+   // const formData = useSelector((state)=> state.category)
   return (
     <Dialog open = {open} onClose = {handleClose}>
       <DialogTitle> Edit Categories</DialogTitle>

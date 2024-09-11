@@ -2,10 +2,20 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
 
+
 const initialState = {
   taxes: [],
+
   status: 'idle',
-  error: null
+  error: null,
+
+  taxData: {
+    name: '',
+    description: '',
+    amount: '',
+    taxType: '',
+    TaxedAmount: ''
+  }
 };
 
 export const fetchTaxes = createAsyncThunk('tax/fetchTaxes', async () => {
@@ -34,10 +44,22 @@ export const taxSlice = createSlice({
         state.taxes[index] = action.payload;
       }
     },
-    
+
     setTaxes: (state, action) => {
       state.taxes = action.payload;
-    }
+    },
+
+    updateField: (state, action) => {
+      const { field, value } = action.payload;
+      state[field] = value;
+    },
+
+    resetForm: (state) => {
+      state.name = '';
+      state.description = '';
+      state.taxType = '';
+      state.amount = '';
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -55,5 +77,5 @@ export const taxSlice = createSlice({
   }
 });
 
-export const { addTax, deleteTax, editTax, setTaxes } = taxSlice.actions;
+export const { addTax, deleteTax, editTax, setTaxes, resetForm,updateField  } = taxSlice.actions;
 export default taxSlice.reducer;

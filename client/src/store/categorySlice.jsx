@@ -1,4 +1,4 @@
- import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   categories: [],
@@ -41,16 +41,14 @@ export const categorySlice = createSlice({
     deleteCategory: (state, action) => {
       state.categories = state.categories.filter((category) => category.id !== action.payload);
     },
-    editCategory: (state, action) => {
-      const { id, updatedData } = action.payload;
+    editCategory: (state, superman) => {
+      const { id } = superman.payload;
       const index = state.categories.findIndex((cat) => cat.id === id);
       if (index !== -1) {
-        state.categories[index] = {
-          ...state.categories[index],
-          ...updatedData
-        };
+        state.categories[index] = superman.payload;
       }
     },
+
     setCategories: (state, action) => {
       state.categories = action.payload;
     },
@@ -67,6 +65,10 @@ export const categorySlice = createSlice({
     setEditingId: (state, action) => {
       state.editingId = action.payload;
     },
+    setDeletingId: (state, action) => {
+      state.deleteCategoryId = action.payload;
+    },
+
     setDropDownVisible: (state, action) => {
       state.dropDownVisible = action.payload;
     },
@@ -123,6 +125,7 @@ export const {
   updateFormData,
   resetFormData,
   setEditingId,
+  setDeletingId,
   setDropDownVisible,
   setPage,
   setrowsperpage,
