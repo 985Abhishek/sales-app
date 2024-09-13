@@ -172,16 +172,16 @@ dispatch(setProduct(storedProducts))
   }
   
   return (
-    <div className = "form-container">
+    <div className = "form-container1">
     {/* <Toaster
   position="top-center"
   reverseOrder={false}
 /> */}
-      <Button variant="contained" color="primary" style={{backgroundColor: "black", marginBottom:"20px", marginLeft: "600px"}} onClick={() => handleOpenDialog(null)}>
+      <Button style= {{backgroundColor: "#4CAF50", color:"white", marginBottom:"10px", position:"relative"}} onClick={() => handleOpenDialog(null)}>
         Add Product
       </Button>
 
-      <table className="tax-table">
+      <table className="tax-table1">
         <thead>
           <tr>
             <th>Name</th>

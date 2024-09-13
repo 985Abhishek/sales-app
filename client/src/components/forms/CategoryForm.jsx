@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadCategories, saveCategories } from '../../utils/localSotrage';
-import './CategoryForm.css';
+import "./CategoryForm.css"
 import {
   addCategory,
   closeAddDialog,
@@ -20,7 +20,7 @@ import {
   setPage,
   updateFormData
 } from '../../store/categorySlice';
-import { Pagination } from '@mui/material';
+import { Button, Pagination } from '@mui/material';
 import AddDialog from '../dialogs/categorydialogs/AddDialog';
 import EditDialog from '../dialogs/categorydialogs/EditDialog';
 import DeleteDialog from '../dialogs/categorydialogs/DeleteDialogs';
@@ -118,7 +118,7 @@ const CategoryForm = () => {
     <>
       <div className="form-container">
         <div className="form-controls">
-          <button onClick={handleOpenAddDialog}>Add Category</button>
+          <Button onClick={handleOpenAddDialog}>Add Category</Button>
         </div>
         <table className="category-table">
           <thead>

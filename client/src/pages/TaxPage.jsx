@@ -1,11 +1,13 @@
-import React from "react";
-import TaxForm from "../components/forms/TaxForm";
-import "./TaxPage.css";
+import React from 'react';
+import './TaxPage.css'
+import TaxForm from '../components/forms/TaxForm';
+
 
 const TaxPage = () => {
   return (
-    <div className="taxPage">
-     <h1 style={{marginLeft:"65%"}}>Manage Tax</h1> 
+    <div >
+      <div className = "Heading"></div>
+   
       <TaxForm />
     </div>
   );

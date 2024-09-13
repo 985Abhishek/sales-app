@@ -1,104 +1,119 @@
+/* General container styling */
 .form-container {
-  color:chartreuse;
-  background-color:darkmagenta;
-}
-.tax-table {
-border-collapse: collapse;
-margin-left:100px;
-margin-top:30px;
+  margin: 20px auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Ensures padding and borders are included in width calculations */
+  padding-top: 80px; /* Adds space at the top to ensure content is not hidden by navbar */
 }
 
-.tax-table th{
-  color:rgb(0, 0, 0);
-  text-align: center;
+/* Heading styling */
+.heading {
+  font-size: 44px;
+  font-weight: bold;
+  margin-left: 450px;
+  color: #333;
+  margin-bottom: 20px;
+  position: relative; /* Ensure proper stacking context */
+  z-index: 1; /* Ensure it is on top if needed */
 }
-.tax-table td {
-  padding: 1px;
-  border: 1px solid #ddd;
-  text-align: center;
+
+/* Button styling */
+.add-tax-button {
+  background-color: #4CAF50; /* Vibrant green */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 20px; /* Adds space between button and table */
+  position: relative; /* Ensure it is on top if needed */
+  z-index: 1; /* Ensure it is on top if needed */
+}
+
+.add-tax-button:hover {
+  background-color: #45a049;
+}
+
+/* Table styling */
+.tax-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  table-layout: fixed; /* Ensures columns have a fixed width */
+}
+
+.tax-table th, .tax-table td {
+  padding: 12px;
+  text-align: left;
+  overflow: hidden; /* Prevents overflow within cells */
+  text-overflow: ellipsis; /* Adds ellipsis if text overflows */
 }
 
 .tax-table th {
-  background-color: #f4f4f4;
+  background-color: #2196F3; /* Vibrant blue */
+  color: white;
 }
 
-.dropdown {
-  position: relative;
+.tax-table tr:nth-child(even) {
+  background-color: #f2f2f2;
 }
 
-.three-dots {
-  font-size: 24px;
-  background: none;
-  border: none;
-  cursor: pointer;
+.tax-table tr:hover {
+  background-color: #ddd;
 }
 
-.dropdown-content {
-  position: absolute;
-  top: 100%;
-  left: 0;
+/* Pagination styling */
+.MuiPagination-root {
   display: flex;
-  flex-direction: column;
-  background-color: rgb(188, 27, 27);
-  border: 1px solid #ddd;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-  z-index: 10;
+  justify-content: center;
+  margin-top: 20px;
 }
 
-.dropdown-content button {
-  padding: 10px;
-  background-color: white;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  /* width: 100%; */
+.MuiPagination-item {
+  color: #2196F3; /* Vibrant blue */
 }
 
-.dropdown-content button:hover {
-  background-color: #f0f0f0;
+.MuiPagination-item:hover {
+  background-color: #ddd;
 }
 
-.form-controls {
+/* Dialogs styling */
+.dialog-container {
+  padding: 20px;
+}
+
+.dialog-title {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #333;
+}
+
+.dialog-actions {
   display: flex;
-  gap: 100px;
-  margin-top: 0px;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
 
-.form-controls input,
-.form-controls select {
-  padding: 10px;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  /* width: 200px; */
-}
-
-.form-controls button {
-  padding: 10px 15px;
-  font-size: 16px;
-  background-color: #007bff;
+.dialog-actions button {
+  background-color: #4CAF50; /* Vibrant green */
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.form-controls button:hover {
-  background-color: #0056b3;
-}
-
-.add-tax-button {
-  position: absolute;
-  top: 18%;
-  left:67.9%;
-  
-  /* width:90px; */
-  margin-top: 1px;
-  background-color: #4caf50;
-  color: #fff;
   padding: 10px 20px;
-  border: none;
+  margin-left: 10px;
+  font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
-  
+  transition: background-color 0.3s;
+}
+
+.dialog-actions button:hover {
+  background-color: #45a049;
 }

@@ -41,11 +41,11 @@ export const categorySlice = createSlice({
     deleteCategory: (state, action) => {
       state.categories = state.categories.filter((category) => category.id !== action.payload);
     },
-    editCategory: (state, superman) => {
-      const { id } = superman.payload;
+    editCategory: (state, action) => {
+      const { id } = action.payload;
       const index = state.categories.findIndex((cat) => cat.id === id);
       if (index !== -1) {
-        state.categories[index] = superman.payload;
+        state.categories[index] = action.payload;
       }
     },
 

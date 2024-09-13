@@ -11,7 +11,7 @@ const SalesForm = ({ selectedProducts }) => {
   const navigate = useNavigate();
   const salesList = useSelector((state) => state.salesList.salesList);
   const [productData, setProductData] = useState([]);
-  // const [selectedProduct, setSelectedproduct] = useState([]);
+  
 
   useEffect(() => {
     dispatch(setSalesList(salesList));

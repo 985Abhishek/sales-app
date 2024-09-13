@@ -37,7 +37,7 @@ const SalesPage = () => {
   
   return (
     <div className="sales">
-      <h1>CART</h1>
+      <h1 style = {{marginLeft: "400px", marginTop: "300px", fontSize: "70px"}}>CART</h1>
 
       <FormControl fullWidth>
         <InputLabel id="product-select-label">Select a Product</InputLabel>
